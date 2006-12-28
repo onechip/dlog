@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 #include <NTL/ZZ_p.h>
 #include "ZZFactoring.h"
@@ -10,6 +9,7 @@
  * Copyright:  GPL (http://www.fsf.org/copyleft/gpl.html)
  */
 
+NTL_START_IMPL;
 
 
 long ProvePrime(const ZZ& _n) {
@@ -118,8 +118,7 @@ inline void PollardRho(ZZ& a, ZZ& b, const ZZ& n,
 //                a properly sorted list of factors
 // pre-condition: n>1
 void PollardRho(vec_pair_ZZ_long& factors, const ZZ& n,
-		const ZZ& _bnd=ZZ::zero(), 
-		long deterministic=0, long verbose=0) {
+		const ZZ& _bnd, long deterministic, long verbose) {
   bool pn = deterministic ? ProvePrime(n) : ProbPrime(n);
   if (pn) {
     addFactor(factors,n);
@@ -172,8 +171,7 @@ ZZ SmallPrimes(vec_pair_ZZ_long& factors, const ZZ& _n) {
 
 // general purpose factoring method
 void factor(vec_pair_ZZ_long& factors, const ZZ& _n,
-            const ZZ& _bnd=ZZ::zero(), 
-	    long deterministic=0, long verbose=0) {
+            const ZZ& _bnd, long deterministic, long verbose) {
   // initialize factors
   factors.SetLength(0);
 
@@ -196,3 +194,4 @@ void factor(vec_pair_ZZ_long& factors, const ZZ& _n,
 }
 
 
+NTL_END_IMPL;

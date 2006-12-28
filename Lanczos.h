@@ -18,7 +18,7 @@ bool Lanczos(const smat_T& A, vec_T& x, const vec_T& y, \
 
 #define NTL_Lanczos_impl(T,vec_T,svec_T,smat_T) \
 bool Lanczos(const smat_T& A, vec_T& x, const vec_T& y, \
-	     long deterministic=0, long verbose=0) { \
+	     long deterministic, long verbose) { \
  \
   long nrows = A.NumRows(); \
   long ncols = A.NumCols(); \

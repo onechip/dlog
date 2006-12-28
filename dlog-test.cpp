@@ -1,8 +1,10 @@
-#include <stdio.h>
+#include <iostream>
+
 #include <time.h>
 
 #include "IndexCalculus.h"
 
+using namespace NTL;
 
 // test if g is a generator of the group ZZ_p
 // f is the factorization of p-1
@@ -27,14 +29,14 @@ int main(int argc, char* argv[]) {
   SetSeed(to_ZZ(time(0)));
 
   // size of modulus (in bits)
-  long k=64;
+  long k=80;
 
   // choose a random modulus
   ZZ p,q;
   GenGermainPrime(q,k-1);  // q has one less bit than p
   p = 2*q+1;
   ZZ_p::init(p);
-  cout<<"Modulus is: "<<p<<"\n";
+  std::cout<<"Modulus: "<<p<<std::endl;
 
   // factorization of p-1
   vec_pair_ZZ_long f;
@@ -47,7 +49,7 @@ int main(int argc, char* argv[]) {
   do {
     random(g);
   } while (!isGenerator(g,f));
-  cout<<"Base is: "<<g<<"\n";
+  std::cout<<"Base:    "<<g<<std::endl;
 
   // set verboseness (set to 1 for more output)
   DLog_IC_Base::VERBOSE=0;
@@ -55,7 +57,7 @@ int main(int argc, char* argv[]) {
   // initialize index calculus
   double start = GetTime();
   IndexCalculus dlog(g);
-  cout<<"Setup time: "<<(GetTime()-start)<<" seconds\n";
+  std::cout<<"Setup time: "<<(GetTime()-start)<<" seconds"<<std::endl;
 
   for (long i=0; i<5; ++i) {
 
@@ -64,18 +66,20 @@ int main(int argc, char* argv[]) {
     random(y);
     
     // find discrete logarithm
-    cout<<"Finding logarithm of: "<<y<<"\n";
+    std::cout<<std::endl;
+    std::cout<<"Finding logarithm of: "<<y<<std::endl;
     ZZ x;
     start = GetTime();
     x = dlog.log(y); 
-    cout<<"Time to find logarithm: "<<(GetTime()-start)<<" seconds\n";
+    std::cout<<"Time to find logarithm: "<<(GetTime()-start)<<" seconds"
+	     <<std::endl;
     // verify logarithm
     ZZ_p yy;
     power(yy,g,x);
     if (y==yy)
-      cout<<"Logarithm is: "<<x<<"\n";
+      std::cout<<"Logarithm is: "<<x<<std::endl;
     else 
-      cout<<"Logarithm ("<<x<<") is incorrect!\n";
+      std::cout<<"Logarithm ("<<x<<") is incorrect!"<<std::endl;
   }
 
   return 0;
