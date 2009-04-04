@@ -692,7 +692,7 @@ void FactorBase::sieve(vec_short& smooth, const ZZX& f, const ZZ& start,
   evaluate(max,f,start);
   abs(max,max);
   ZZ t;
-  evaluate(max,f,start+length-1);
+  evaluate(t,f,start+length-1);
   abs(t,t);
   if (max<t) max=t;
   ZZX df;

@@ -1,6 +1,8 @@
 #ifndef NTLX_vec_short__H
 #define NTLX_vec_short__H
 
+#include <string.h>
+
 #include <NTL/vector.h>
 
 NTL_OPEN_NNS;

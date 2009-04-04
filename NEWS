@@ -1,4 +1,8 @@
 
+New in v1.2
++ minor compile fix
++ minor bug when computing the range of a function over it's domain
+
 New in v1.1
 + fixed namespace madness
 + sparse vector now has parameter for index type (still long for now)
