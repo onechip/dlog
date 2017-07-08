@@ -17,11 +17,6 @@ NTL_START_IMPL;
 
 static const bool SGAUSS_VERBOSE = false;
 
-template<class T>
-inline void swap(T& x, T& y) {
-  T z=x; x=y; y=z;
-}
-
 inline long IsZero(long i) {
   return (i==0);
 }

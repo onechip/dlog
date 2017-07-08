@@ -15,18 +15,6 @@
 
 NTL_START_IMPL;
 
-NTL_vector_impl(svec_long,vec_svec_long);
-NTL_eq_vector_impl(svec_long,vec_svec_long);
-NTL_io_vector_impl(svec_long,vec_svec_long);
-
-NTL_vector_impl(svec_ZZ,vec_svec_ZZ);
-NTL_eq_vector_impl(svec_ZZ,vec_svec_ZZ);
-NTL_io_vector_impl(svec_ZZ,vec_svec_ZZ);
-
-NTL_vector_impl(svec_ZZ_p,vec_svec_ZZ_p);
-NTL_eq_vector_impl(svec_ZZ_p,vec_svec_ZZ_p);
-NTL_io_vector_impl(svec_ZZ_p,vec_svec_ZZ_p);
-
 inline long IsZero(long i) {
   return (i==0);
 }

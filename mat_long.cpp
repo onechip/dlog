@@ -9,13 +9,7 @@
 
 NTL_START_IMPL;
 
-NTL_matrix_impl(long,vec_long,vec_vec_long,mat_long);
-
-NTL_eq_matrix_impl(long,vec_long,vec_vec_long,mat_long);
-
-NTL_io_matrix_impl(long,vec_long,vec_vec_long,mat_long);
-
-inline void clear(vec_long& a) {
+static inline void clear(vec_long& a) {
   for (long i=0; i<a.length(); ++i)
     a[i]=0;
 }
