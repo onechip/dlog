@@ -9,11 +9,6 @@
 
 NTL_START_IMPL;
 
-static inline void clear(vec_long& a) {
-  for (long i=0; i<a.length(); ++i)
-    a[i]=0;
-}
-
 void clear(mat_long& A) {
   for (long i=0; i<A.NumRows(); ++i)
     clear(A[i]);

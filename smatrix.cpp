@@ -15,14 +15,6 @@
 
 NTL_START_IMPL;
 
-inline long IsZero(long i) {
-  return (i==0);
-}
-
-inline void clear(vec_long& v) {
-  memset(v.elts(),0,sizeof(long)*v.length());
-}
-
 NTL_smatrix_impl(long,svec_long,vec_svec_long,smat_long);
 NTL_conv_smatrix_impl(long,svec_long,vec_svec_long,mat_long,smat_long);
 NTL_math_smatrix_impl(long,vec_long,svec_long,vec_svec_long,smat_long);
@@ -46,8 +38,8 @@ inline void mul(svec_ZZ_p& result, const svec_long& a, const ZZ_p& b) {
   result.SetLength(a.length());
   clear(result);
   long an = a.nvalues();
-  const svec_long::index_t* ai = a.indices();
-  const svec_long::value_t* av = a.values();
+  const long* ai = a.indices();
+  const svec_long::value_type* av = a.values();
   for (long i=0; i<an; ++i)
     if (av[i]!=0)
       result[ai[i]] = av[i]*b;
@@ -58,8 +50,8 @@ inline void mul(svec_ZZ_p& result, const svec_ZZ& a, const ZZ_p& b) {
   result.SetLength(a.length());
   clear(result);
   long an = a.nvalues();
-  const svec_ZZ::index_t* ai = a.indices();
-  const svec_ZZ::value_t* av = a.values();
+  const long* ai = a.indices();
+  const svec_ZZ::value_type* av = a.values();
   for (long i=0; i<an; ++i)
     if (av[i]!=0) 
       result[ai[i]] = to_ZZ_p(av[i])*b;
@@ -73,8 +65,8 @@ inline void InnerProduct(ZZ_p& result, const svec_long& a, const vec_ZZ_p& b) {
   }
   clear(result);
   long an = a.nvalues();
-  const svec_long::index_t* ai = a.indices();
-  const svec_long::value_t* av = a.values();
+  const long* ai = a.indices();
+  const svec_long::value_type* av = a.values();
   for (long i=0; i<an; ++i)
     result += av[i]*b[ai[i]];
 }
@@ -86,8 +78,8 @@ inline void InnerProduct(ZZ_p& result, const svec_ZZ& a, const vec_ZZ_p& b) {
   }
   clear(result);
   long an = a.nvalues();
-  const svec_ZZ::index_t* ai = a.indices();
-  const svec_ZZ::value_t* av = a.values();
+  const long* ai = a.indices();
+  const svec_ZZ::value_type* av = a.values();
   for (long i=0; i<an; ++i)
     result += to_ZZ_p(av[i])*b[ai[i]];
 }
