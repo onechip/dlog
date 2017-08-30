@@ -129,7 +129,7 @@ public:
   // factor H+a and save for future use
   void factor(long a) {
     if (a<0) {
-      cerr<<"IC_Relations::factor() FATAL ERROR!\n";
+      std::cerr<<"IC_Relations::factor() FATAL ERROR!"<<std::endl;
       exit(1);
     }
     if (a>=large_med.length()) {
@@ -167,7 +167,7 @@ public:
     if ((low<medium.length())&&(medium[low].a==a))
       return low;
     // this should never happen
-    cerr<<"findMediumFactor() factor not found!\n";
+    std::cerr<<"findMediumFactor() factor not found!"<<std::endl;
     return -1;
   }
 
@@ -251,7 +251,7 @@ public:
 	gen_index=i;
     }
     if (gen_index<0) {
-      cerr<<"IndexCalculus::makeMatrix() generator not in factorbase!\n";
+      std::cerr<<"IndexCalculus::makeMatrix() generator not in factorbase!"<<std::endl;
       return;
     }
 
@@ -357,10 +357,10 @@ public:
     } while (!done);
 
     if (DLog_IC_Base::VERBOSE)
-      cout<<"IndexCalculus::makeMatrix() "
+      std::cout<<"IndexCalculus::makeMatrix() "
 	  <<rows.length()<<" rows, "
 	  <<cols_fb.length()<<" fb cols, "
-	  <<cols_med.length()<<" med cols\n";
+	  <<cols_med.length()<<" med cols"<<std::endl;
     
     // make matrix and vector
     A.SetDims(rows.length(),cols_fb.length()+cols_med.length());
@@ -508,7 +508,7 @@ bool IndexCalculus::make_system() {
   ZZ H;
   H=1+SqrRoot(p);
   if (VERBOSE)
-    cout<<"IndexCalculus::make_system() H = "<<H<<"\n";
+    std::cout<<"IndexCalculus::make_system() H = "<<H<<std::endl;
 
   // variables needed for sieve
   IC_Relations rels(zfb,H);
@@ -518,7 +518,7 @@ bool IndexCalculus::make_system() {
   sieve.SetMaxLength(sieve_length);
 
   if (VERBOSE)
-    cout<<"IndexCalculus::make_system() sieve_length = "<<sieve_length<<"\n";
+    std::cout<<"IndexCalculus::make_system() sieve_length = "<<sieve_length<<std::endl;
 
   // sieve stats
   long sieve_count=0;
@@ -565,32 +565,31 @@ bool IndexCalculus::make_system() {
 
     long percent = 100 - (nprimes+rels.nmedium-rels.nrels)*100/nprimes;
     if ((percent!=last_percent)||(sieve_count-last_count>=10)) {
-      cout<<"Sieving: "
+      std::cout<<"Sieving: "
 	  <<sieve_count<<" sieves, "
 	  <<sieve_smooth<<"/"<<sieve_total<<" smooth, "
 	  <<rels.nrels<<"/"<<(nprimes+rels.nmedium)<<" needed";
       if (percent<100)
-	cout<<" ("<<percent<<"%)  \r";
+          std::cout<<" ("<<percent<<"%)  \r"<<std::flush;
       else
-	cout<<"        \r";
-      cout.flush();
+          std::cout<<"        \r"<<std::flush;
       last_percent=percent;
       last_count=sieve_count;
     }
   }
-  cout<<"\n";
+  std::cout<<std::endl;
 
   //sieve1_times();
-  //std::cout<<"sieve1: "<<sieve_time<<" seconds"<<std::endl;
+  //std::std::cout<<"sieve1: "<<sieve_time<<" seconds"<<std::endl;
 
   delete[] fact;
 
   // reporting
   if (sieve_bad)
-    cout<<"IndexCalculus::make_system() WARNING: "<<sieve_bad
-	<<" non-smooth integers from sieve\n";
+    std::cout<<"IndexCalculus::make_system() WARNING: "<<sieve_bad
+	<<" non-smooth integers from sieve"<<std::endl;
   if (!done) {
-    cerr<<"IndexCalculus::make_system() sieve was too short\n";
+    std::cerr<<"IndexCalculus::make_system() sieve was too short"<<std::endl;
     return false;
   }
 
@@ -615,15 +614,15 @@ bool IndexCalculus::make_system() {
   rels.makeMatrix(A, b, to_long(rep(g)));
 
   if (VERBOSE) {
-    cout<<"IndexCalculus::make_system() A is "
-	<<A.NumRows()<<"x"<<A.NumCols()<<"\n";
+    std::cout<<"IndexCalculus::make_system() A is "
+	<<A.NumRows()<<"x"<<A.NumCols()<<std::endl;
   }
 
   // solution to linear system
   vec_ZZ x;
   
   if (!solve_system(A,x,b,q)) {
-    cerr<<"IndexCalculus::make_system() failed to solve system\n";
+    std::cerr<<"IndexCalculus::make_system() failed to solve system"<<std::endl;
     return false;
   }
 
@@ -655,10 +654,10 @@ bool IndexCalculus::make_system() {
     }
   }
   if (VERBOSE)
-    cout<<"IndexCalculus::make_system() "<<ncache<<" cached logarithms\n";
+    std::cout<<"IndexCalculus::make_system() "<<ncache<<" cached logarithms"<<std::endl;
   if (incorrect) {
-    cout<<"IndexCalculus::make_system() "
-	<<incorrect<<" INCORRECT LOGARITHMS\n";
+    std::cout<<"IndexCalculus::make_system() "
+	<<incorrect<<" INCORRECT LOGARITHMS"<<std::endl;
     if (incorrect>ncache)
       return false;
   }
@@ -686,10 +685,10 @@ bool IndexCalculus::make_system() {
   while ((ufb.length()>0)&&(IsZero(ufb[ufb.length()-1])))
     ufb.SetLength(ufb.length()-1);
   if (VERBOSE)
-    cout<<"IndexCalculus::make_system() "<<cufb<<" upper logarithms\n";
+    std::cout<<"IndexCalculus::make_system() "<<cufb<<" upper logarithms"<<std::endl;
   if (incorrect) {
-    cout<<"IndexCalculus::make_system() "
-	<<incorrect<<" INCORRECT LOGARITHMS\n";
+    std::cout<<"IndexCalculus::make_system() "
+	<<incorrect<<" INCORRECT LOGARITHMS"<<std::endl;
     if (incorrect>cufb)
       return false;
   }
@@ -720,8 +719,8 @@ bool IndexCalculus::solve_system(const smat_long& Aorig, vec_ZZ& x,
   SGauss(A,y,cols,Aorig,yorig);
 
   if (VERBOSE)
-    cout<<"IndexCalculus::solve_system() reduced matrix is "
-	<<A.NumRows()<<"x"<<A.NumCols()<<"\n";
+    std::cout<<"IndexCalculus::solve_system() reduced matrix is "
+	<<A.NumRows()<<"x"<<A.NumCols()<<std::endl;
 
   // solve system
   if (!Lanczos(A,X,y))
@@ -758,18 +757,18 @@ void IndexCalculus::setBase(const ZZ_p& base, long bound, long length) {
 
   // largest factor must have exponent 1
   if (factors[factors.length()-1].b!=1) {
-    cerr<<"IndexCalculus::setBase() largest factor of order has multiplicity>1\n";
+    std::cerr<<"IndexCalculus::setBase() largest factor of order has multiplicity>1"<<std::endl;
     return;
   }
 
   // modulus for solving the linear system
   q = factors[factors.length()-1].a;
   if (VERBOSE)
-    cout<<"IndexCalculus::setBase() q = "<<q<<"\n";
+    std::cout<<"IndexCalculus::setBase() q = "<<q<<std::endl;
 
   // other factor (solved using Pollard Rho method)
   if (VERBOSE)
-    cout<<"IndexCalculus::setBase() other = "<<((ZZ_p::modulus()-1)/q)<<"\n";
+    std::cout<<"IndexCalculus::setBase() other = "<<((ZZ_p::modulus()-1)/q)<<std::endl;
 
   // figure out optimal parameters
   parameters(bound,sieve_length,ZZ_p::modulus());
@@ -777,7 +776,7 @@ void IndexCalculus::setBase(const ZZ_p& base, long bound, long length) {
   // factorbase
   zfb.setBound(bound);
   if (VERBOSE)
-    cout<<"IndexCalculus::setBase() "<<zfb.length()<<" primes in factorbase\n";
+    std::cout<<"IndexCalculus::setBase() "<<zfb.length()<<" primes in factorbase"<<std::endl;
 
   // check base
   ZZ b(rep(base));
@@ -796,7 +795,7 @@ void IndexCalculus::setBase(const ZZ_p& base, long bound, long length) {
       }
     }
     if (!found) {
-      cerr<<"IndexCalculus::setBase() failed to find generator (increase factorbase)\n";
+      std::cerr<<"IndexCalculus::setBase() failed to find generator (increase factorbase)"<<std::endl;
       g=0;
       log_base=0;
       return;
@@ -804,11 +803,11 @@ void IndexCalculus::setBase(const ZZ_p& base, long bound, long length) {
   }
 
   if (VERBOSE)
-    cout<<"IndexCalculus::setBase() generator is "<<g<<"\n";
+    std::cout<<"IndexCalculus::setBase() generator is "<<g<<std::endl;
 
   // sieving
   if (!make_system()) {
-    cerr<<"IndexCalculus::setBase() sieving failed!\n";
+    std::cerr<<"IndexCalculus::setBase() sieving failed!"<<std::endl;
     log_base=0;
     return;
   }
@@ -823,7 +822,7 @@ void IndexCalculus::setBase(const ZZ_p& base, long bound, long length) {
       return;
   }
   if (VERBOSE)
-    cout<<"IndexCalculus::solve_system() log_base is "<<log_base<<"\n";
+    std::cout<<"IndexCalculus::solve_system() log_base is "<<log_base<<std::endl;
 }
 
 // logarithm of a (medium sized) prime
@@ -847,7 +846,7 @@ ZZ IndexCalculus::log_prime(const ZZ& pw) {
 	continue;
     }
     if (VERBOSE)
-      cout<<"IndexCalculus::log_prime() y="<<y<<" \n";
+      std::cout<<"IndexCalculus::log_prime() y="<<y<<' '<<std::endl;
 
     // sieve to find v
     sieve.SetLength(ufb.length());
@@ -863,7 +862,7 @@ ZZ IndexCalculus::log_prime(const ZZ& pw) {
 	logn = log_g(n,true);
 	if (!IsZero(logn)) {
 	  if (VERBOSE)
-	    cout<<"IndexCalculus::log_prime() v="<<(sufb+i)<<" \n";
+        std::cout<<"IndexCalculus::log_prime() v="<<(sufb+i)<<' '<<std::endl;
 	  logn -= logy;
 	  logn -= ufb[i];
 	  rem(logn,logn,ZZ_p::modulus()-1);
