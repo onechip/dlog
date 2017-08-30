@@ -13,7 +13,8 @@ LINKFLAGS	= $(NTLLIB)
 ALL_PROGS	= dlog-test
 COMMON_OBJS	= vector.o ZZFactoring.o \
 		  mat_long.o svector.o smatrix.o SGauss.o \
-		  FactorBase.o DiscreteLog.o IndexCalculus.o
+		  FactorBase.o DiscreteLog.o DLog_IC_Base.o \
+		  IndexCalculus.o
 COMMON_HEADERS	=
 
 
